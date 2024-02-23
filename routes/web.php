@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Spatie\Browsershot\Browsershot;
+use Spatie\LaravelPdf\Facades\Pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/print', function () {
+    Pdf::view('welcome')
+        ->withBrowsershot(
+            fn (Browsershot $browsershot) => $browsershot
+                ->margins(0, 0, 0, 0)
+                ->emulateMedia('print')
+                ->showBackground()
+                ->waitUntilNetworkIdle()
+        )
+        ->format('A4')
+        ->save('test.pdf');
 });
