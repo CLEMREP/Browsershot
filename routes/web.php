@@ -27,6 +27,8 @@ Route::get('/print', function () {
                 ->emulateMedia('print')
                 ->showBackground()
                 ->waitUntilNetworkIdle()
+                //->setRemoteInstance()
+                //https://spatie.be/docs/browsershot/v4/requirements
         )
         ->format('A4')
         ->save('test.pdf');
